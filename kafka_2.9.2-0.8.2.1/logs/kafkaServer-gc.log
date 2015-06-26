@@ -1,0 +1,21 @@
+2015-06-26T13:22:55.420-0700: 2.531: [GC [1 CMS-initial-mark: 0K(963392K)] 56256K(1040064K), 0.0196047 secs] [Times: user=0.02 sys=0.00, real=0.02 secs] 
+2015-06-26T13:22:55.440-0700: 2.551: [CMS-concurrent-mark-start]
+2015-06-26T13:22:55.484-0700: 2.594: [CMS-concurrent-mark: 0.043/0.044 secs] [Times: user=0.07 sys=0.01, real=0.04 secs] 
+2015-06-26T13:22:55.484-0700: 2.594: [CMS-concurrent-preclean-start]
+2015-06-26T13:22:55.511-0700: 2.621: [CMS-concurrent-preclean: 0.026/0.027 secs] [Times: user=0.05 sys=0.00, real=0.03 secs] 
+2015-06-26T13:22:55.511-0700: 2.621: [CMS-concurrent-abortable-preclean-start]
+2015-06-26T13:22:55.784-0700: 2.895: [GC 2015-06-26T13:22:55.785-0700: 2.895: [ParNew: 68160K->1378K(76672K), 0.0143404 secs] 68160K->1378K(1040064K), 0.0144958 secs] [Times: user=0.04 sys=0.01, real=0.01 secs] 
+ CMS: abort preclean due to time 2015-06-26T13:23:00.537-0700: 7.648: [CMS-concurrent-abortable-preclean: 0.757/5.026 secs] [Times: user=1.43 sys=0.07, real=5.02 secs] 
+2015-06-26T13:23:00.538-0700: 7.648: [GC[YG occupancy: 20416 K (76672 K)]2015-06-26T13:23:00.538-0700: 7.648: [GC 2015-06-26T13:23:00.538-0700: 7.648: [ParNew: 20416K->1981K(76672K), 0.0053728 secs] 20416K->1981K(1040064K), 0.0054571 secs] [Times: user=0.02 sys=0.01, real=0.01 secs] 
+2015-06-26T13:23:00.543-0700: 7.654: [Rescan (parallel) , 0.0034242 secs]2015-06-26T13:23:00.547-0700: 7.657: [weak refs processing, 0.0000304 secs]2015-06-26T13:23:00.547-0700: 7.657: [class unloading, 0.0019379 secs]2015-06-26T13:23:00.549-0700: 7.659: [scrub symbol & string tables, 0.0019624 secs] [1 CMS-remark: 0K(963392K)] 1981K(1040064K), 0.0131317 secs] [Times: user=0.03 sys=0.01, real=0.02 secs] 
+2015-06-26T13:23:00.551-0700: 7.661: [CMS-concurrent-sweep-start]
+2015-06-26T13:23:00.557-0700: 7.668: [CMS-concurrent-sweep: 0.007/0.007 secs] [Times: user=0.01 sys=0.00, real=0.00 secs] 
+2015-06-26T13:23:00.558-0700: 7.668: [CMS-concurrent-reset-start]
+2015-06-26T13:23:00.561-0700: 7.672: [CMS-concurrent-reset: 0.004/0.004 secs] [Times: user=0.00 sys=0.00, real=0.01 secs] 
+Heap
+ par new generation   total 76672K, used 28737K [7bae00000, 7c0130000, 7c0130000)
+  eden space 68160K,  39% used [7bae00000, 7bc820fb8, 7bf090000)
+  from space 8512K,  23% used [7bf090000, 7bf27f7a8, 7bf8e0000)
+  to   space 8512K,   0% used [7bf8e0000, 7bf8e0000, 7c0130000)
+ concurrent mark-sweep generation total 963392K, used 0K [7c0130000, 7fae00000, 7fae00000)
+ concurrent-mark-sweep perm gen total 43904K, used 26964K [7fae00000, 7fd8e0000, 800000000)

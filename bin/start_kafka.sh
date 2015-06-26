@@ -20,5 +20,4 @@ fi
 
 $KAFKADIR/bin/zookeeper-server-start.sh $KAFKADIR/$ZOOCONFIG &
 $KAFKADIR/bin/kafka-server-start.sh $KAFKADIR/$SERVERCONFIG & 
-go run http_server.go -brokers=":9092"
 

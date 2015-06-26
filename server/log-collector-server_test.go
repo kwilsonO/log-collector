@@ -1,13 +1,14 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"github.com/Shopify/sarama/mocks"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/Shopify/sarama"
-	"github.com/Shopify/sarama/mocks"
 )
 
 // In normal operation, we expect one access log entry,
@@ -17,13 +18,9 @@ func TestCollectSuccessfully(t *testing.T) {
 	dataCollectorMock := mocks.NewSyncProducer(t, nil)
 	dataCollectorMock.ExpectSendMessageAndSucceed()
 
-	accessLogProducerMock := mocks.NewAsyncProducer(t, nil)
-	accessLogProducerMock.ExpectInputAndSucceed()
-
 	// Now, use dependency injection to use the mocks.
 	s := &Server{
-		DataCollector:     dataCollectorMock,
-		AccessLogProducer: accessLogProducerMock,
+		DataCollector: dataCollectorMock,
 	}
 
 	// The Server's Close call is important; it will call Close on
@@ -31,7 +28,20 @@ func TestCollectSuccessfully(t *testing.T) {
 	// expectations are resolved.
 	defer safeClose(t, s)
 
-	req, err := http.NewRequest("GET", "http://example.com/?data", nil)
+	var kmsg KafkaMsg = KafkaMsg{
+		Topic: "TestTopic",
+		Key:   "TestKey",
+		Value: "my test value",
+	}
+
+	b, err := json.Marshal(kmsg)
+	if err != nil {
+		fmt.Println("Could not marshal json")
+		return
+	}
+
+	req, err := http.NewRequest("POST", "http://localhost/", bytes.NewBuffer(b))
+	//req, err := http.NewRequest("GET", "http://example.com/?data", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,45 +57,14 @@ func TestCollectSuccessfully(t *testing.T) {
 	}
 }
 
-// Now, let's see if we handle the case of not being able to produce
-// to the data collector properly. In this case we should return a 500 status.
-func TestCollectionFailure(t *testing.T) {
-	dataCollectorMock := mocks.NewSyncProducer(t, nil)
-	dataCollectorMock.ExpectSendMessageAndFail(sarama.ErrRequestTimedOut)
-
-	accessLogProducerMock := mocks.NewAsyncProducer(t, nil)
-	accessLogProducerMock.ExpectInputAndSucceed()
-
-	s := &Server{
-		DataCollector:     dataCollectorMock,
-		AccessLogProducer: accessLogProducerMock,
-	}
-	defer safeClose(t, s)
-
-	req, err := http.NewRequest("GET", "http://example.com/?data", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	res := httptest.NewRecorder()
-	s.Handler().ServeHTTP(res, req)
-
-	if res.Code != 500 {
-		t.Errorf("Expected HTTP status 500, found %d", res.Code)
-	}
-}
-
 // We don't expect any data collector calls because the path is wrong,
 // so we are not setting any expectations on the dataCollectorMock. It
 // will still generate an access log entry though.
 func TestWrongPath(t *testing.T) {
 	dataCollectorMock := mocks.NewSyncProducer(t, nil)
 
-	accessLogProducerMock := mocks.NewAsyncProducer(t, nil)
-	accessLogProducerMock.ExpectInputAndSucceed()
-
 	s := &Server{
-		DataCollector:     dataCollectorMock,
-		AccessLogProducer: accessLogProducerMock,
+		DataCollector: dataCollectorMock,
 	}
 	defer safeClose(t, s)
 

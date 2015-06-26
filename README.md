@@ -7,11 +7,11 @@ TO USE:
 
 From the main project directory run:
 
-`sh bin/start\_kafka.sh
+	sh bin/start_kafka.sh
 
-`sh bin/run\_collector.sh
+	sh bin/run_collector.sh
 
 
 Then you can use the test client in the test-client folder:
 
-`go run log-collector-client.go
+	go run log-collector-client.go

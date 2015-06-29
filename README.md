@@ -1,5 +1,7 @@
 # Producer Web Service 
 
+###To be used with: https://github.com/kwilsonO/log-daemon and https://github.com/kwilsonO/cassandra-consumer
+
 This is a basic webservice which applications can send their logs via an http request, then the web service
 will appropriately store the log into kafka where it should go.
 
